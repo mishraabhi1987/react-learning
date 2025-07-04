@@ -1,22 +1,12 @@
 import logo from "./logo.svg";
+import PersonalDetailsForm from "./PersonalDetailsForm";
 
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello! Abhishek, Kamal and Mayank. Be ready to learn the React :)</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <PersonalDetailsForm />
     </div>
   );
 }

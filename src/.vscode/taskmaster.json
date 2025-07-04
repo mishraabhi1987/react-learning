@@ -1,0 +1,17 @@
+{
+  "Task Comment": {
+    "prefix": "task",
+    "body": ["# Task: $1"],
+    "description": "create a new components and create a form in this where we can take personal details from users and store them in a database"
+  },
+  "UI Enhancement": {
+    "prefix": "ui",
+    "body": ["# Task: $1"],
+    "description": "enhace the ui of the perosnal details form by adding validation, error handling, and a responsive design"
+  },
+  "check error": {
+    "prefix": "check",
+    "body": ["# Task: $1"],
+    "description": "find the latest changes in the code and check for any errors or bugs that may have been introduced and do not fix it automatically give me the details of the error and then ask do i need to fix it or not"
+  }
+}

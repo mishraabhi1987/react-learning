@@ -5,26 +5,42 @@ import "./GeminiChat.css";
 // Get API key from environment variables
 const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 
-// Validate API key is available
+// Validate API key is available and in correct format
 if (!GEMINI_API_KEY) {
   console.error(
     "Gemini API key not found. Please set REACT_APP_GEMINI_API_KEY in your environment variables."
+  );
+} else if (typeof GEMINI_API_KEY !== "string") {
+  console.error("Gemini API key must be a string.");
+} else if (!GEMINI_API_KEY.startsWith("AIza")) {
+  console.error(
+    "Invalid Gemini API key format. API key should start with 'AIza'."
   );
 }
 
 async function callGeminiAPI(prompt) {
   try {
-    // Check if API key is available
+    // Validate API key
     if (!GEMINI_API_KEY) {
       throw new Error(
         "API key not configured. Please contact the administrator."
       );
     }
 
+    if (typeof GEMINI_API_KEY !== "string") {
+      throw new Error("Invalid API key type. Expected string.");
+    }
+
+    if (!GEMINI_API_KEY.startsWith("AIza")) {
+      throw new Error(
+        "Invalid API key format. Please check your configuration."
+      );
+    }
+
     console.log("Making API call with prompt:", prompt);
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: {
@@ -40,16 +56,22 @@ async function callGeminiAPI(prompt) {
               ],
             },
           ],
+          safetySettings: [
+            {
+              category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE",
+            },
+          ],
           generationConfig: {
-            maxOutputTokens: 100,
             temperature: 0.7,
-            topP: 0.8,
             topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 100,
           },
         }),
       }
     );
-
+    console.log("Response:", response);
     console.log("Response status:", response.status);
     console.log("Response ok:", response.ok);
 
@@ -66,22 +88,15 @@ async function callGeminiAPI(prompt) {
 
     // Check for blocked content or safety issues
     if (
-      data.candidates &&
-      data.candidates[0] &&
-      data.candidates[0].finishReason === "SAFETY"
+      data.promptFeedback?.blockReason ||
+      (data.candidates &&
+        data.candidates[0]?.safetyRatings?.some((rating) => rating.blocked))
     ) {
       return "Sorry, the content was blocked due to safety reasons. Please try a different prompt.";
     }
 
     // Extract the response text
-    if (
-      data.candidates &&
-      data.candidates[0] &&
-      data.candidates[0].content &&
-      data.candidates[0].content.parts &&
-      data.candidates[0].content.parts[0] &&
-      data.candidates[0].content.parts[0].text
-    ) {
+    if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
       return data.candidates[0].content.parts[0].text.trim();
     } else {
       console.error("Unexpected response structure:", data);
@@ -348,7 +363,7 @@ function GeminiChat() {
       {/* Left Side - Product Container */}
       <div className="product-container">
         <div className="product-header">
-          <h3>📦 Product Details</h3>
+          <h3>📦 Product List</h3>
           <button
             onClick={clearProducts}
             className="clear-products-button"
@@ -394,7 +409,7 @@ function GeminiChat() {
       {/* Right Side - Chat Container */}
       <div className="gemini-chat-container">
         <h2 className="gemini-chat-header">
-          AI Chat with Gemini
+          AI Chat
           <div className="gemini-chat-subtitle">
             Limited to 100 tokens per response
           </div>
@@ -404,7 +419,7 @@ function GeminiChat() {
           {chatHistory.length === 0 && !loading && (
             <div className="welcome-message">
               <div className="welcome-content">
-                <h3>👋 Welcome to Gemini Chat!</h3>
+                <h3>👋 Welcome to AI Chat!</h3>
                 <p>
                   Start a conversation by typing your question below. I'm here
                   to help with:
@@ -499,7 +514,7 @@ function GeminiChat() {
               disabled={loading || !prompt.trim()}
               className="submit-button"
             >
-              {loading ? "🤔 Thinking..." : "🚀 Ask Gemini"}
+              {loading ? "🤔 Thinking..." : "🚀 Ask AI"}
             </button>
 
             <button

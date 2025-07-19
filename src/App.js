@@ -1,12 +1,12 @@
-import logo from "./logo.svg";
-import PersonalDetailsForm from "./PersonalDetailsForm";
+import React from "react";
+import GeminiChat from "./GeminiChat";
 
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <PersonalDetailsForm />
+      <GeminiChat />
     </div>
   );
 }

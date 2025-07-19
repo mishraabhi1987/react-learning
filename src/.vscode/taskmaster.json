@@ -6,7 +6,11 @@
   },
   "UI Enhancement": {
     "prefix": "ui",
-    "body": ["# Task: $1"],
+    "body": [
+      "# Task: $1",
+      "# Priority: ${2|high|}",
+      "# Status: ${3|todo,in-progress,done|}"
+    ],
     "description": "enhace the ui of the perosnal details form by adding validation, error handling, and a responsive design"
   },
   "check error": {

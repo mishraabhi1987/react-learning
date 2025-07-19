@@ -95,7 +95,12 @@ function GeminiChat() {
   const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accessKey, setAccessKey] = useState("");
+  const [accessError, setAccessError] = useState("");
   const chatContentRef = useRef(null);
+
+  const CORRECT_ACCESS_KEY = "mishragemini087";
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
@@ -103,6 +108,17 @@ function GeminiChat() {
       chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
     }
   }, [chatHistory, loading]);
+
+  const handleAccessSubmit = (e) => {
+    e.preventDefault();
+    if (accessKey === CORRECT_ACCESS_KEY) {
+      setIsAuthenticated(true);
+      setAccessError("");
+    } else {
+      setAccessError("Invalid access key. Please try again.");
+      setAccessKey("");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -156,6 +172,54 @@ function GeminiChat() {
     setChatHistory([]);
     setError("");
   };
+
+  // Show access screen if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="gemini-chat-container">
+        <div className="access-screen">
+          <div className="access-content">
+            <h2 className="access-title">🔐 Access Required</h2>
+            <p className="access-description">
+              Please enter the access key to continue to Gemini Chat
+            </p>
+            
+            <form onSubmit={handleAccessSubmit} className="access-form">
+              <div className="access-input-section">
+                <label htmlFor="accessKey" className="access-label">
+                  Access Key:
+                </label>
+                <input
+                  type="password"
+                  id="accessKey"
+                  value={accessKey}
+                  onChange={(e) => setAccessKey(e.target.value)}
+                  placeholder="Enter access key..."
+                  required
+                  className="access-input"
+                  autoFocus
+                />
+              </div>
+              
+              {accessError && (
+                <div className="access-error">
+                  ⚠️ {accessError}
+                </div>
+              )}
+              
+              <button type="submit" className="access-button">
+                🚀 Access Chat
+              </button>
+            </form>
+            
+            <div className="access-footer">
+              <p>🤖 Powered by Google Gemini AI</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="gemini-chat-container">
@@ -225,7 +289,9 @@ function GeminiChat() {
           {loading && (
             <div className="loading-container">
               <div className="loading-main-text">🤔 Generating response...</div>
-              <div className="loading-sub-text">This may take a few seconds</div>
+              <div className="loading-sub-text">
+                This may take a few seconds
+              </div>
             </div>
           )}
         </div>

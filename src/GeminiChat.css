@@ -1,5 +1,110 @@
 /* Gemini Chat Component Styles */
 
+/* Access Screen Styles */
+.access-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+}
+
+.access-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.access-title {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.access-description {
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.access-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.access-input-section {
+  text-align: left;
+}
+
+.access-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.access-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.access-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.access-error {
+  background: #ffe6e6;
+  color: #cc0000;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #ff9999;
+}
+
+.access-button {
+  padding: 14px 24px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.access-button:hover {
+  background: #0056b3;
+}
+
+.access-button:active {
+  transform: translateY(1px);
+}
+
+.access-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.access-footer p {
+  color: #888;
+  font-size: 14px;
+  margin: 0;
+}
+
 .gemini-chat-container {
   max-width: 600px;
   margin: 0 auto;
@@ -22,6 +127,15 @@
     border-left: none;
     border-right: none;
     padding: 15px;
+  }
+  
+  .access-content {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+  
+  .access-title {
+    font-size: 1.5rem;
   }
 }
 

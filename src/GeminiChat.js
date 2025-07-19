@@ -130,7 +130,7 @@ function GeminiChat() {
   const [products, setProducts] = useState([]);
   const chatContentRef = useRef(null);
 
-  const CORRECT_ACCESS_KEY = "mishragemini087";
+  const CORRECT_ACCESS_KEY = process.env.REACT_APP_ACCESS_KEY;
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {

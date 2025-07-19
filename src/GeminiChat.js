@@ -140,26 +140,28 @@ function GeminiChat() {
         </div>
       </h2>
 
-      {error && (
-        <div className="error-container">
-          <h4 className="error-title">⚠️ Error:</h4>
-          <div className="error-message">{error}</div>
-        </div>
-      )}
+      <div className="chat-content">
+        {error && (
+          <div className="error-container">
+            <h4 className="error-title">⚠️ Error:</h4>
+            <div className="error-message">{error}</div>
+          </div>
+        )}
 
-      {response && (
-        <div className="response-container">
-          <h4 className="response-title">🤖 AI Response:</h4>
-          <div className="response-text">{response}</div>
-        </div>
-      )}
+        {response && (
+          <div className="response-container">
+            <h4 className="response-title">🤖 AI Response:</h4>
+            <div className="response-text">{response}</div>
+          </div>
+        )}
 
-      {loading && (
-        <div className="loading-container">
-          <div className="loading-main-text">🤔 Generating response...</div>
-          <div className="loading-sub-text">This may take a few seconds</div>
-        </div>
-      )}
+        {loading && (
+          <div className="loading-container">
+            <div className="loading-main-text">🤔 Generating response...</div>
+            <div className="loading-sub-text">This may take a few seconds</div>
+          </div>
+        )}
+      </div>
 
       <form onSubmit={handleSubmit} className="form-container">
         <div className="input-section">

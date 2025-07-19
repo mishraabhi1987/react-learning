@@ -2,18 +2,34 @@
 
 .gemini-chat-container {
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #f8f9fa;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .gemini-chat-container {
+    max-width: 100%;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 15px;
+  }
 }
 
 .gemini-chat-header {
   text-align: center;
   color: #333;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
 }
 
 .gemini-chat-subtitle {
@@ -21,6 +37,31 @@
   color: #666;
   font-weight: normal;
   margin-top: 8px;
+}
+
+.chat-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 1rem;
+}
+
+.chat-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.chat-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .error-container {
@@ -48,8 +89,7 @@
   background: #f8fde5ff;
   border: 1px solid #c3e6c3;
   border-radius: 6px;
-  margin-top: 16px;
-  margin-bottom: 36px;
+  margin-bottom: 16px;
 }
 
 .response-title {
@@ -68,8 +108,7 @@
 .loading-container {
   text-align: center;
   color: #6c757d;
-  margin-top: 16px;
-  margin-bottom: 36px;
+  margin-bottom: 16px;
 }
 
 .loading-main-text {
@@ -82,11 +121,15 @@
 }
 
 .form-container {
-  margin-bottom: 2rem;
+  flex-shrink: 0;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+  margin-top: 1rem;
 }
 
 .input-section {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .input-header {
@@ -106,15 +149,17 @@
 }
 
 .textarea-input {
-  width: 95%;
+  width: 100%;
   padding: 12px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 14px;
   font-family: inherit;
   resize: vertical;
-  min-height: 100px;
+  min-height: 80px;
+  max-height: 120px;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .textarea-input:focus {

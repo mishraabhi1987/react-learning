@@ -1,15 +1,72 @@
-# Getting Started with Create React App
+# Gemini AI Chat Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React application that provides an AI-powered chat interface using Google's Gemini API, with a two-column layout featuring a product management system.
+
+## Features
+
+- 🤖 AI Chat powered by Google Gemini API
+- 📦 Product details management
+- 🔐 Access control with password protection
+- 📱 Responsive design for mobile and desktop
+- 💬 Persistent chat history
+- ⚡ Real-time AI responses with 100 token limit
+
+## Environment Setup
+
+### 1. API Key Configuration
+
+This application requires a Google Gemini API key. Follow these steps:
+
+1. Get your API key from [Google AI Studio](https://aistudio.google.com/)
+2. Create a `.env.local` file in the root directory
+3. Add your API key:
+
+```bash
+REACT_APP_GEMINI_API_KEY=your_api_key_here
+```
+
+**Important**: Never commit your API key to version control. The `.env.local` file is already included in `.gitignore`.
+
+### 2. Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
+```
+
+### 3. Access the Application
+
+1. Open [http://localhost:3000/react-learning](http://localhost:3000/react-learning)
+2. Enter the access key: `mishragemini087`
+3. Start chatting!
+
+## Usage
+
+### Chat Features
+
+- Ask any questions for AI responses
+- Use natural language for conversations
+- Responses are limited to 100 tokens for quick interactions
+
+### Product Management
+
+Add products to the left panel using commands like:
+
+- "add product iPhone 15"
+- "create product details for Samsung Galaxy"
+- "product information for MacBook Pro"
+
+The AI will automatically generate and display product details in the left panel.
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the app in development mode.
+Open [http://localhost:3000/react-learning](http://localhost:3000/react-learning) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./GeminiChat.css";
 // This code is a React component that connects to Gemini API to provide AI-powered responses.
 
@@ -92,20 +92,40 @@ async function callGeminiAPI(prompt) {
 
 function GeminiChat() {
   const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const chatContentRef = useRef(null);
+
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    if (chatContentRef.current) {
+      chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
+    }
+  }, [chatHistory, loading]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!prompt.trim()) return;
 
+    const userMessage = {
+      id: Date.now(),
+      type: "user",
+      content: prompt.trim(),
+      timestamp: new Date(),
+    };
+
+    // Add user message to chat history
+    setChatHistory((prev) => [...prev, userMessage]);
+
     setLoading(true);
-    setResponse("");
     setError("");
 
+    const currentPrompt = prompt.trim();
+    setPrompt(""); // Clear input immediately
+
     try {
-      const aiResponse = await callGeminiAPI(prompt);
+      const aiResponse = await callGeminiAPI(currentPrompt);
 
       // Check if response contains error
       if (
@@ -115,7 +135,13 @@ function GeminiChat() {
       ) {
         setError(aiResponse);
       } else {
-        setResponse(aiResponse);
+        const botMessage = {
+          id: Date.now() + 1,
+          type: "bot",
+          content: aiResponse,
+          timestamp: new Date(),
+        };
+        setChatHistory((prev) => [...prev, botMessage]);
       }
     } catch (error) {
       setError("Unexpected error occurred. Please try again.");
@@ -127,7 +153,7 @@ function GeminiChat() {
 
   const clearAll = () => {
     setPrompt("");
-    setResponse("");
+    setChatHistory([]);
     setError("");
   };
 
@@ -140,27 +166,69 @@ function GeminiChat() {
         </div>
       </h2>
 
-      <div className="chat-content">
-        {error && (
-          <div className="error-container">
-            <h4 className="error-title">⚠️ Error:</h4>
-            <div className="error-message">{error}</div>
+      <div className="chat-content" ref={chatContentRef}>
+        {chatHistory.length === 0 && !loading && (
+          <div className="welcome-message">
+            <div className="welcome-content">
+              <h3>👋 Welcome to Gemini Chat!</h3>
+              <p>
+                Start a conversation by typing your question below. I'm here to
+                help with:
+              </p>
+              <ul>
+                <li>Answering questions</li>
+                <li>Providing explanations</li>
+                <li>Creative writing</li>
+                <li>Problem solving</li>
+                <li>And much more!</li>
+              </ul>
+              <p>
+                <em>
+                  Note: Responses are limited to 100 tokens for quick
+                  interactions.
+                </em>
+              </p>
+            </div>
           </div>
         )}
 
-        {response && (
-          <div className="response-container">
-            <h4 className="response-title">🤖 AI Response:</h4>
-            <div className="response-text">{response}</div>
-          </div>
-        )}
+        <div className="messages-container">
+          {error && (
+            <div className="error-container">
+              <h4 className="error-title">⚠️ Error:</h4>
+              <div className="error-message">{error}</div>
+            </div>
+          )}
 
-        {loading && (
-          <div className="loading-container">
-            <div className="loading-main-text">🤔 Generating response...</div>
-            <div className="loading-sub-text">This may take a few seconds</div>
-          </div>
-        )}
+          {chatHistory.map((message) => (
+            <div
+              key={message.id}
+              className={`message-container ${
+                message.type === "user" ? "user-message" : "bot-message"
+              }`}
+            >
+              <div className="message-header">
+                <span className="message-sender">
+                  {message.type === "user" ? "👤 You" : "🤖 AI"}
+                </span>
+                <span className="message-time">
+                  {message.timestamp.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+              </div>
+              <div className="message-content">{message.content}</div>
+            </div>
+          ))}
+
+          {loading && (
+            <div className="loading-container">
+              <div className="loading-main-text">🤔 Generating response...</div>
+              <div className="loading-sub-text">This may take a few seconds</div>
+            </div>
+          )}
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="form-container">
@@ -197,7 +265,7 @@ function GeminiChat() {
             disabled={loading}
             className="clear-button"
           >
-            Clear
+            {chatHistory.length > 0 ? "Clear Chat" : "Clear"}
           </button>
         </div>
       </form>

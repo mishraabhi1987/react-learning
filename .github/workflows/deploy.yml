@@ -3,8 +3,6 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build-and-deploy:
@@ -20,13 +18,16 @@ jobs:
           node-version: "18"
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install dependencies
+        run: |
+          npm ci --legacy-peer-deps
 
       - name: Create environment file
         run: |
           echo "REACT_APP_GEMINI_API_KEY=${{ secrets.REACT_APP_GEMINI_API_KEY }}" > .env
           echo "REACT_APP_ACCESS_KEY=${{ secrets.REACT_APP_ACCESS_KEY }}" >> .env
+          echo "Environment file created"
+          ls -la .env
 
       - name: Build project
         run: npm run build

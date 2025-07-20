@@ -43,3 +43,6 @@ pids
 
 # Optional eslint cache
 .eslintcache
+
+# GitHub Actions (we want to track these)
+# .github/

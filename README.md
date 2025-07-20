@@ -34,6 +34,36 @@ REACT_APP_ACCESS_KEY="your_access_key_here"
 
 **Important**: Never commit your `.env` file to version control. It's already included in `.gitignore`.
 
+## GitHub Pages Deployment
+
+This project is set up with automatic deployment to GitHub Pages using GitHub Actions.
+
+### Setting up GitHub Secrets for Deployment
+
+To deploy with your API keys, you need to add them as secrets in your GitHub repository:
+
+1. Go to your GitHub repository
+2. Click on **Settings** tab
+3. In the left sidebar, click **Secrets and variables** → **Actions**
+4. Click **New repository secret** and add:
+   - Name: `REACT_APP_GEMINI_API_KEY`
+   - Value: Your actual Gemini API key
+5. Click **Add secret**
+6. Repeat for the access key:
+   - Name: `REACT_APP_ACCESS_KEY`
+   - Value: Your actual access key
+
+### Automatic Deployment
+
+- Every push to the `main` branch triggers automatic deployment
+- The GitHub Action builds the project with your secrets injected as environment variables
+- The built site is deployed to GitHub Pages automatically
+- No manual deployment needed!
+
+### Manual Deployment (Alternative)
+
+If you prefer manual deployment:
+
 ### 2. Installation
 
 ```bash

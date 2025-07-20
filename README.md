@@ -18,14 +18,21 @@ This is a React application that provides an AI-powered chat interface using Goo
 This application requires a Google Gemini API key. Follow these steps:
 
 1. Get your API key from [Google AI Studio](https://aistudio.google.com/)
-2. Create a `.env.local` file in the root directory
-3. Add your API key:
+2. Copy `.env.example` to `.env` in the root directory
+3. Add your actual API key and access key:
 
 ```bash
-REACT_APP_GEMINI_API_KEY=your_api_key_here
+cp .env.example .env
 ```
 
-**Important**: Never commit your API key to version control. The `.env.local` file is already included in `.gitignore`.
+Then edit `.env` with your actual values:
+
+```bash
+REACT_APP_GEMINI_API_KEY="your_gemini_api_key_here"
+REACT_APP_ACCESS_KEY="your_access_key_here"
+```
+
+**Important**: Never commit your `.env` file to version control. It's already included in `.gitignore`.
 
 ### 2. Installation
 
@@ -40,7 +47,7 @@ npm start
 ### 3. Access the Application
 
 1. Open [http://localhost:3000/react-learning](http://localhost:3000/react-learning)
-2. Enter the access key: `mishragemini087`
+2. Enter the access key you configured in your `.env` file
 3. Start chatting!
 
 ## Usage
